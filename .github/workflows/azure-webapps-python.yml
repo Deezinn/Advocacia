@@ -18,9 +18,11 @@ jobs:
 
     - name: Terraform init
       run: terraform init
+      working-directory: ./terraform
 
     - name: Terraform plan
       run: terraform plan
+      working-directory: ./terraform
       env:
         AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -29,6 +31,7 @@ jobs:
 
     - name: Terraform apply
       run: terraform apply -auto-approve
+      working-directory: ./terraform
       env:
         AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
