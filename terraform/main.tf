@@ -1,7 +1,16 @@
 provider "azurerm" {
   features {}
-  subscription_id = "62a47bad-99aa-450d-a7e2-ef75d08015f4"  # Sua Subscription ID
+  subscription_id = var.subscription_id
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  tenant_id       = var.tenant_id
 }
+
+# Variáveis do Terraform
+variable "subscription_id" {}
+variable "client_id" {}
+variable "client_secret" {}
+variable "tenant_id" {}
 
 # Criar o grupo de recursos
 resource "azurerm_resource_group" "rg" {
@@ -9,12 +18,12 @@ resource "azurerm_resource_group" "rg" {
   location = "East US"
 }
 
-# Criar o plano de serviço (Linux para Docker) com SKU F1
+# Criar o plano de serviço (Linux para Docker) com SKU B1
 resource "azurerm_service_plan" "app_service_plan" {
   name                = "my-dash-app-service-plan"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  sku_name            = "B1"  # SKU F1 (Plano gratuito)
+  sku_name            = "B1"  # SKU B1 (Plano básico)
   os_type             = "Linux"  # Tipo de sistema operacional (Linux)
 
   tags = {
@@ -30,7 +39,7 @@ resource "azurerm_linux_web_app" "app" {
   service_plan_id     = azurerm_service_plan.app_service_plan.id
 
   site_config {
-    # Remover linux_fx_version, e usar a configuração customizada para o Docker
+    linux_fx_version = "DOCKER|deezinn/my-dash-app:latest"
   }
 
   app_settings = {
