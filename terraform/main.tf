@@ -31,12 +31,11 @@ resource "azurerm_linux_web_app" "app" {
 
   site_config {
     # Remover linux_fx_version, e usar a configuração customizada para o Docker
-    app_command_line = "/bin/sh -c 'python index.py'"  # Comando para rodar sua aplicação no container
   }
 
   app_settings = {
     "WEBSITES_PORT"            = "8050"  # Porta onde o app vai rodar
-    "DOCKER_CUSTOM_IMAGE_NAME" = "deezinn/my-dash-app:latest"  # URL da sua imagem Docker no Docker Hub
+    "DOCKER_CUSTOM_IMAGE_NAME" = "deezinn/my-dash-app:latest"
   }
 
   tags = {
