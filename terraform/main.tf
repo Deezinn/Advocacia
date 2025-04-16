@@ -44,7 +44,6 @@ resource "azurerm_linux_web_app" "app" {
 
   app_settings = {
     "WEBSITES_PORT"            = "8050"  # Porta onde o app vai rodar
-    "DOCKER_CUSTOM_IMAGE_NAME" = "deezinn/my-dash-app:latest"
   }
 
   tags = {
